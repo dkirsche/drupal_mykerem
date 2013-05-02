@@ -1,0 +1,173 @@
+<?php
+/* Debugging
+  print '<!-- ';
+  print_r( $node);
+  print ' -->';
+*/
+
+// Make variable accessible  
+  global $base_path;
+
+// Set new title
+if ($page != 0) {
+  drupal_set_title('View Blog Entry');
+}
+
+// add bookmarking script
+drupal_add_js($directory .'/scripts.js');
+
+// link to this node
+$pagelink = 'http://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+
+?>
+<div id="node-<?php print $node->nid; ?>" class="node<?php if ($sticky) { print ' sticky'; } ?><?php if (!$status) { print ' node-unpublished'; } ?>">
+
+<?php // print $picture ?>
+
+<?php if ($page != 0 && $user->uid == $node->uid): ?>
+  <div class="art_box">
+   	<div class="modify_box">
+      	<img src="<?php print $base_path . $directory ?>/images/modify.jpg" alt="Click to edit" />
+          <h4><a href="<?php print url('node/'.$node->nid.'/edit') ?>">Modify This Post</a> &nbsp;|</h4>
+      </div>
+      <div class="modify_box">
+      	<img src="<?php print $base_path . $directory ?>/images/delet.jpg" alt="Click to delete" />
+          <h4><a href="<?php print url('node/'.$node->nid.'/delete') ?>">Delete This Post</a></h4>
+     </div>
+   	<div class="clr"></div>
+   </div>
+<?php endif; ?>
+
+<?php if ($page == 0) { ?>
+
+  <h2 class="title"><a href="<?php print $node_url ?>" title="<?php print $title ?>"><?php print $title ?></a></h2>
+
+<?php } else { ?>
+  <div class="spacer5"></div>
+  <h1 class="title"><?php print $title ?></h1>
+  <h4 class="author">Author: <a href="#"><?php print theme('username',$user) ?></a>  (<a href="<?php print url('blog/'.$node->uid) ?>"> View All <?php print $node->name ?>´s Blogs</a> )</h4>
+  
+<?php } ?>
+
+  <?php if ($submitted): ?>
+    <h4 class="submitted"><?php print t('Posted: ') . format_date($node->created); ?></h4>
+  <?php endif; ?>
+
+  <div class="content clear-block">
+    <?php print $content ?>
+    <?php
+    // Show only on teaser view and if link exist
+    if ($teaser && $node->readmore) {
+      print '<p><a href="'. $node_url .'" title="'.t('Read full article').'" class="readmore">'.t('Read more').'</a></p>';
+    }
+    ?>
+  </div>
+<?php if ($page == 0): ?>
+  <div class="comment">
+    <div class="small_box1">
+      <img src="<?php print $base_path . $directory ?>/images/small_imt.jpg" alt="comment" />
+      <h4><a href="<?php print $node_url; ?>/#comments"><?php print format_plural($comment_count, t('1 Comment'), t('@count Comments')); ?></a>&nbsp;&nbsp; |</h4>
+      <div class="clr"></div>
+    </div>
+
+
+    <div class="small_box2">
+      <img src="<?php print $base_path . $directory ?>/images/plus.jpg" alt="plusl" />
+      <h4><a href="javascript:void(0);" onclick="javascript:bookmarksite('<?php print str_replace('\\',"'",$node->title) ?>', '<?php print $pagelink ?>')">Favorite</a></h4>
+      <div class="clr"></div>
+    </div>
+    <div class="clr"></div>
+  </div>
+<?php endif; ?>
+
+<?php if ($page != 0): ?>
+<div class="comment1">
+  <div class="small_box1 nomarg">
+    <img src="<?php print $base_path . $directory ?>/images/small_imt.jpg" alt="comment" />
+    <h4><?php print format_plural($comment_count, t('1 Comment'), t('@count Comments')); ?>&nbsp;&nbsp; |</h4>
+    <div class="clr"></div>
+  </div>
+
+  <div class="small_box6">
+  <img src="<?php print $base_path . $directory ?>/images/plus.jpg" alt="plusl" />
+  <h4><a href="#">Recommend&nbsp;&nbsp; |</a></h4>
+  <div class="clr"></div>
+  </div>
+  
+  <div class="small_box6">
+  <img src="<?php print $base_path . $directory ?>/images/commetn.jpg" alt="coment" />
+  <h4><a href="#comments">Add Comment</a>&nbsp; |</h4>
+  <div class="clr"></div>
+  </div>
+  
+  <div class="small_box0">
+  <img src="<?php print $base_path . $directory ?>/images/star.jpg" alt="star" />
+  <h4><a href="#">Rate</a>&nbsp;&nbsp; |</h4>
+  <div class="clr"></div>
+  </div>
+  
+  <div class="small_box7">
+  <img src="<?php print $base_path . $directory ?>/images/man.jpg" alt="man" />
+  <h4><a href="#">Tell A Friend </a></h4>
+  <div class="clr"></div>
+  </div>
+<div class="clr"/>
+</div>
+  <div class="art_box"></div>
+
+<div id="share">
+	<h1>Share:</h1>
+  <div class="share_box">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/stum.jpg" alt="stum" />
+      <h3 class="share_text"><a href="http://www.stumbleupon.com/submit?url=<?php print $pagelink; ?>&amp;title=<?php print $title; ?>">StumbleUpon</a> |</h3>
+      <div class="clr"></div>
+  </div>
+  
+  <div class="share_box1">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/del.jpg" alt="del" />
+      <h3 class="share_text"><a href="http://del.icio.us/post?url=<?php print $pagelink; ?>&amp;title=<?php print $title; ?>">Del.icio.us</a> |</h3>
+      <div class="clr"></div>
+  </div>
+  
+  <div class="share_box2">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/feed.jpg" alt="feed" />
+      <h3 class="share_text"><a href="http://www.facebook.com/sharer.php?u=<?php print $pagelink; ?>&amp;t=<?php print $title; ?>">Facebook</a>|</h3>
+      <div class="clr"></div>
+  </div>
+  
+  <div class="share_box3">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/tewter.jpg" alt="tweter" />
+      <h3 class="share_text"><a href="http://twitthis.com/twit?url=<?php print $pagelink; ?>">Twitter</a> |</h3>
+      <div class="clr"></div>
+  </div>
+  
+    <div class="share_box4">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/dig.jpg" alt="dig" />
+      <h3 class="share_text"><a href="http://digg.com/submit?phase=2&amp;url=<?php print $pagelink; ?>&amp;title=<?php print $title; ?>">Dig</a> |</h3>
+      <div class="clr"></div>
+  </div>
+  
+  <div class="share_box3">
+  	<img class="share_img" src="<?php print $base_path . $directory ?>/images/myspace.jpg" alt="myspace" />
+      <h3 class="share_text"><a href="http://www.myspace.com/Modules/PostTo/Pages/?t=<?php print $title; ?>&amp;c=<?php print $pagelink; ?>">MySpace</a></h3>
+      <div class="clr"></div>
+  </div>
+  
+  <div class="clr"></div>
+</div>
+<?php endif; ?>
+
+<!--
+   <div class="clear-block">
+    <div class="meta">
+    <?php if ($taxonomy): ?>
+      <div class="terms"><?php print $terms ?></div>
+    <?php endif;?>
+    </div>
+
+    <?php if ($links): ?>
+      <div class="links"><?php print $links; ?></div>
+    <?php endif; ?>
+  </div>
+-->
+</div>

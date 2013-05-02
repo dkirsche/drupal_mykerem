@@ -1,0 +1,34 @@
+/**
+ * Styles for Internet Explorer 6
+ */
+
+/**
+ * form buttons
+ */
+input.form-submit {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+#tbl-profile-info-wines1,
+#tbl-profile-info-wines2 {
+  height:100px;
+}
+
+
+/* preventing main to be pushed down */
+#block-block-12 {
+  overflow: hidden;
+}
+
+
+/* Set min height for content */
+.main_artmidtop {
+  height: 500px;
+}
+
+
+#ajax_search a.close {
+
+}

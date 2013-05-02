@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+body.page-search #section-headline,
+body.page-search-node #section-headline,
+body.page-search-user #section-headline {
+background-image:url(images/section_search.jpg);
+text-indent:-9999px;
+}
+
+.block-poll li.statistics_counter {
+	display:none;
+}
+
+.block-poll ul.links {
+	text-align:center;
+}

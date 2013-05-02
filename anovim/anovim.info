@@ -1,0 +1,24 @@
+; $Id$
+
+name = Anovim
+description = Developed by SEOecom.com
+version = VERSION
+core = 6.x
+engine = phptemplate
+stylesheets[all][] = style.css
+stylesheets[all][] = style-extra.css
+stylesheets[all][] = AlecS.css
+; stylesheets[print][] = print.css
+
+; Regions
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[content_top] = Content Top
+regions[content_main_top] = Content main top
+regions[content] = Content
+regions[content_middle] = Content middle
+regions[content_bottom] = Content bottom
+;regions[header] = Header
+regions[footer] = Footer
+regions[content_front] = Front info
+regions[banner_bottom] = Banner bottom

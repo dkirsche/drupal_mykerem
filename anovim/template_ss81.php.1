@@ -1,0 +1,61 @@
+<?php
+if ( $_GET['q'] == 'user/register' ) {
+  // include the script to the page
+  drupal_add_js( drupal_get_path('module', 'ss81_anovim') . '/jquery.selectboxes.js' );
+
+  // generate list of countries and fill the Countries select list
+  $countries = location_get_iso3166_list();
+
+  $script = '$(document).ready(function() {' . "\r\n" .
+
+  '$("#edit-profile-country-wrapper").html("<select id=\"edit-profile-country\" class=\"form-select required info_input1\" name=\"profile_country\"></select>");
+  $("#edit-profile-state-wrapper").html("<select id=\"edit-profile-state\" class=\"form-select required info_input1\" name=\"profile_state\"></select>");
+
+  var myOptions = {' . "\r\n";
+  $first_country = '';
+  $tmp = array();
+  foreach( $countries as $k => $v ) {
+    $tmp[] = '"' . $k . '" : "' . $v . '"';
+
+    if ( $first_country == '' ) {
+      $first_country = $k;
+    }
+  }
+  $script .= implode(",\r\n", $tmp) . '}' . "\r\n" .
+  '$("#edit-profile-country").removeOption(/./);' . "\r\n" .
+  '$("#edit-profile-country").addOption(myOptions, false);' . "\r\n\r\n";
+
+  // generate list of states for first country from the select list
+  include_once( drupal_get_path('module', 'location') . '/supported/location.' . $first_country . '.inc' );
+  $fun_name = 'location_province_list_' . $first_country;
+  $sates = $fun_name();
+
+  $script .= 'myOptions = {' . "\r\n";
+  $tmp = array();
+  foreach( $sates as $k => $v ) {
+    $tmp[] = '"' . $k . '" : "' . $v . '"';
+  }
+  $script .= implode(",\r\n", $tmp) . '}' . "\r\n" .
+  '$("#edit-profile-state").removeOption(/./);' . "\r\n" .
+  '$("#edit-profile-state").addOption(myOptions, false);' . "\r\n" .
+
+  '$("#edit-profile-country").change(function(){
+    $("#edit-profile-state").removeOption(/./);
+    $.getJSON("/ss81/states-list/" + $("#edit-profile-country").selectedValues()[0], function(data){
+      if ( data["error"] == "empty" ) {
+        $("#edit-profile-state-wrapper").html("<input type=\"text\" class=\"form-text required info_input1\" value=\"\" size=\"60\" id=\"edit-profile-state\" name=\"profile_state\" maxlength=\"255\"/>");
+      }
+      else {
+        $("#edit-profile-state-wrapper").html("<select id=\"edit-profile-state\" class=\"form-select required info_input1\" name=\"profile_state\"></select>");
+        $("#edit-profile-state").addOption(data, false);
+      }
+    });
+
+    //$("#edit-profile-state").removeOption(/./);
+    //$("#edit-profile-state").ajaxAddOption( "/ss81/states-list/" + $("#edit-profile-country").selectedValues()[0] );
+  });' . "\r\n" .
+
+  '});' . "\r\n\r\n";
+
+  drupal_add_js($script, 'inline');
+}

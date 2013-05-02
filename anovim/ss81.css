@@ -1,0 +1,284 @@
+/* WARNING!!! ONLY ss81 CAN CHANGE THIS FILE!!! */
+
+
+
+#ajax_datebox {
+
+  /*height:200px;*/
+
+}
+
+
+
+.month-9, .month-10, .month-11, .month-12 {
+
+  border-bottom: none;
+
+}
+
+
+
+#ajax_search {
+
+ /* z-index: 1;*/
+
+}
+
+
+
+#ajax_con .form-item {
+
+  margin: 0px;
+
+}
+
+
+
+#edit-from-wrapper {
+
+  float: left;
+
+}
+
+
+
+#ajax_con #edit-from-wrapper {
+
+  margin-right:15px;
+
+}
+
+
+
+#edit-to-wrapper {
+
+  float: left;
+
+}
+
+
+
+#ajax_con .container-inline-date,
+
+#ajax_con .date-clear-block {
+
+  clear: none;
+
+  float: left;
+
+  margin: 0px;
+
+}
+
+
+
+#ajax_con #edit-from-datepicker-popup-0,
+
+#ajax_con #edit-to-datepicker-popup-0 {
+
+  background:transparent url(images/ajax_in1.jpg) no-repeat scroll 0 0;
+
+  border:medium none;
+
+  float:left;
+
+  font-size:11px;
+
+  height:19px;
+
+  margin:0 2px 0 5px;
+
+  padding:3px 0 0 5px;
+
+  width:82px;
+
+}
+
+
+
+.main_blogmidtop .blog_content {
+
+  margin: 0px;
+
+}
+
+
+
+.page-user .main_blogmidtop .blog_content {
+
+  margin:0px 8px 0px;
+
+}
+
+
+
+.node .content {
+
+  font-size:12px;
+
+  line-height:1.5em;
+
+}
+
+
+
+.generl_box {
+
+  padding:0px 0px 10px 0px;
+
+}
+
+
+
+.info_input1 {
+
+  height: auto;
+
+  padding:0 0 3px 1px;
+
+  width:200px;
+
+  margin:0 15px 10px 0;
+
+}
+
+
+
+.info_label1 {
+
+  margin:0 12px 0 0;
+
+  width:205px;
+
+}
+
+
+
+.edit-submit {
+
+  width: auto;
+
+}
+
+
+
+/*********************************** pager ************************************/
+
+.blog_content .pager {
+
+  margin: 10px 0px 0px;
+
+  text-align: left;
+
+}
+
+
+
+.blog_content .pager li {
+
+  margin:0 1em 0 0;
+
+  padding: 0px;
+
+  float: left;
+
+}
+
+
+
+.blog_content .pager-previous,
+
+.blog_content .pager-next {
+
+/*  width:30px; */
+
+}
+
+
+
+.blog_content .pager-previous a,
+
+.blog_content .pager-next a,
+
+.blog_content .pager-last a {
+
+  font-size:8px;
+
+  letter-spacing:1px;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.blog_content .pager .pager-next {
+
+  text-align: right;
+
+}
+
+
+
+.blog_content .pager .pager-item,
+
+.blog_content .pager .pager-current {
+
+  margin-right:4px;
+
+  height:11px;
+
+}
+
+
+
+.blog_content .pager .pager-item a,
+
+.blog_content .pager .pager-current {
+
+  display:block;
+
+  font-size:9px;
+
+  padding:0px 3px;
+
+  border:1px solid #FFFFFF;
+
+}
+
+
+
+.blog_content .pager .pager-item a:hover {
+
+  border:1px solid #000000;
+
+  text-decoration: none;
+
+}
+
+
+
+.blog_content .pager .pager-current {
+
+  border:1px solid #000000;
+
+}
+
+/*********************************** END pager ********************************/
+
+
+
+.page-user #user-register .form-item {
+
+  margin: 0px;
+
+}
+
+
+
+/*.page-user #edit-profile-state {
+
+  width: 139px;
+
+}*/
+

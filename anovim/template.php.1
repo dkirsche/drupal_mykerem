@@ -1,0 +1,234 @@
+<?php
+// $Id: template.php,v 1.16 2007/10/11 09:51:29 goba Exp $
+
+/**
+ * Sets the body-tag class attribute.
+ *
+ * Adds 'sidebar-left', 'sidebar-right' or 'sidebars' classes as needed.
+ *//*
+function phptemplate_body_class($left, $right) {
+  if ($left != '' && $right != '') {
+    $class = 'sidebars';
+  }
+  else {
+    if ($left != '') {
+      $class = 'sidebar-left';
+    }
+    if ($right != '') {
+      $class = 'sidebar-right';
+    }
+  }
+
+  if (isset($class)) {
+    print ' class="'. $class .'"';
+  }
+}
+*/
+/**
+ * Return a themed breadcrumb trail.
+ *
+ * @param $breadcrumb
+ *   An array containing the breadcrumb links.
+ * @return a string containing the breadcrumb output.
+ */
+function phptemplate_breadcrumb($breadcrumb) {
+  if (!empty($breadcrumb)) {
+    $breadcrumb[] = drupal_get_title();
+//    return '<div class="breadcrumb">'. implode(' › ', $breadcrumb) .'</div>';
+    return '<ul><li>'. implode($breadcrumb, ' › </li><li>') .'</li></ul>';
+  }
+}
+
+/**
+ * Allow themable wrapping of all comments.
+ */
+function phptemplate_comment_wrapper($content, $node) {
+  if (!$content || $node->type == 'forum') {
+    return '<div id="comments">'. $content .'</div>';
+  }
+  else {
+    return '<div id="comments"><h2 class="comments">'. t('Comments') .'</h2>'. $content .'</div>';
+  }
+}
+
+/**
+ * Override or insert PHPTemplate variables into the templates.
+ */
+function phptemplate_preprocess_page(&$vars) {
+  $vars['tabs2'] = menu_secondary_local_tasks();
+
+  // Hook into color.module
+  if (module_exists('color')) {
+    _color_page_alter($vars);
+  }
+}
+
+/**
+ * Returns the rendered local tasks. The default implementation renders
+ * them as tabs. Overridden to split the secondary tasks.
+ *
+ * @ingroup themeable
+ */
+function phptemplate_menu_local_tasks() {
+  return menu_primary_local_tasks();
+}
+
+function phptemplate_comment_submitted($comment) {
+  return t('!datetime — !username',
+    array(
+      '!username' => theme('username', $comment),
+      '!datetime' => format_date($comment->timestamp)
+    ));
+}
+
+function phptemplate_node_submitted($node) {
+  return t('!datetime — !username',
+    array(
+      '!username' => theme('username', $node),
+      '!datetime' => format_date($node->created),
+    ));
+}
+
+/**
+ * Generates IE CSS links for LTR and RTL languages.
+ */
+function phptemplate_get_ie_styles() {
+  global $language;
+
+  $iecss = '<link type="text/css" rel="stylesheet" media="all" href="'. base_path() . path_to_theme() .'/style-fix-ie.css" />';
+  $ie6css = '<link type="text/css" rel="stylesheet" media="all" href="'. base_path() . path_to_theme() .'/style-fix-ie6.css" />';
+  
+  if (defined('LANGUAGE_RTL') && $language->direction == LANGUAGE_RTL) {
+    $iecss .= '<style type="text/css" media="all">@import "'. base_path() . path_to_theme() .'/fix-ie-rtl.css";</style>';
+  }
+
+  return $iecss;
+}
+
+
+/**
+ * Override the default user login form
+ */
+function anovim_theme() {
+  return array(
+    'user_login_block' => array(
+      'template' => 'user_login',
+      'arguments' => array('form' => NULL),
+    ),
+    // other theme registration code...
+  );
+}
+
+function anovim_preprocess_user_login_block(&$variables) {
+  $variables['intro_text'] = t('This is my awesome login form');
+  $variables['rendered'] = drupal_render($variables['form']);
+}
+
+
+
+/**
+ * Function for handling abuse links.
+ * 
+ * @param $type
+ *  possible values are 'comment' (default), 'node', or 'user'
+ * 
+ * @return a string containing the link
+ * 
+ * TODO: check if the item is flagged or not      
+ */
+function link_report_abuse($type = 'comment', $item_id = NULL) {
+  if ($item_id > 0) {
+    $link = '<a href="'. url('flag_content/add/'.$item_id.'/'.$type) .'">'.t('Report Abuse').'</a>';
+  } else {
+    $link = '';
+  }
+  return $link;
+}
+
+/**
+ * Function for pager in forum
+ * @param $TopicID
+ * get the $TopicID topic for queries
+ *
+ */
+function ton86_pager_forum_list($TopicID,$NumTopic) {
+  $ton86_path  = base_path() . path_to_theme() . '/';
+  $output='';
+  $options = array('attributes' => array('class' => 'ton86_pager'));
+
+  
+  $NumberOfResults=comment_num_all($TopicID);
+  $Limit = 10; //Number of results per page
+  $NumberOfPages=ceil($NumberOfResults/$Limit);
+   
+  $rows = array();
+  $page_no=1;
+  
+  for($i=0;$i<$NumberOfPages;$i++)
+		{
+			if ($page_no==1){
+				$rows[] = array(l($page_no,t('node/').$TopicID,$options));
+			}else{
+				$rows[] = array(l($page_no,'node/'.$TopicID.'?page='.$page_no,$options));
+			}
+			$page_no++;
+		}
+  if ($NumTopic>0){
+  	$total_comment=comment_num_all($TopicID);
+    $output .='<div class="back_main">';
+    $output .='<div class="list_img"><img src="'.$ton86_path.'images/list_img.jpg" alt="img" /></div>';
+    $output .='<div class="bac_box3">';
+    $output .='<ul class="ton86_pager" id="'.$total_comment.'">';
+    $output .=ton86_count_pages($rows);
+    $output .='</ul>';
+    $output .='<div class="clr"></div>';
+    $output .='</div>';
+    $output .='<div class="clr"></div>';
+    $output .='</div>'; 	
+  }
+
+  return $output;
+}
+
+/**
+ * function count how many pages and divide it
+ * 
+ */
+function ton86_count_pages($no_row) {
+	$var= '';
+	for($i=0;$i<count($no_row);$i++)
+		{
+			$var.='<li>'.urldecode(implode($no_row[$i],' ')).'</li>';
+		}
+	return $var;
+}
+
+function ton86_forum_pager($node) {
+  $comments_per_page = _comment_get_display_setting('comments_per_page', $node);
+  $num_comments = $node->num_comments;
+
+	if (($num_comments) >= $comments_per_page) {
+		$total_pages = ceil(($num_comments) / $comments_per_page);
+
+		for ($i = 0; $i < $num_comments; $i += $comments_per_page)	{
+      $items[] = array(
+        'class' => 'forum-pager-item',
+        'data' => ($i == 0 ? t('Pages: ') . '[ ' : '')
+        . l(t($i + 1), "node/$node->nid", array('query' => array('page' => $i)))
+        . ($i + $comments_per_page > $num_comments - 1 ? ' ]' : ''),
+      );
+
+			if ($i == 0 && $total_pages > 5) {
+				$items[] = array('data' => '...');
+				$i += ($total_pages - 4) * $comments_per_page;
+			}
+		}
+  	return theme('item_list', $items, NULL, 'ul', array('class' => 'forum-pager'));
+	}
+  //print '<pre>'; print_r($items); print '</pre>';
+}
+
+
+
+
+

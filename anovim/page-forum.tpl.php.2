@@ -1,0 +1,151 @@
+<?php
+/**
+ * Create section title
+ */ 
+  $title_section = 'Forum';
+
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language ?>" lang="<?php print $language->language ?>" dir="<?php print $language->dir ?>">
+<head>
+  <title><?php print $head_title ?></title>
+  <?php print $head ?>
+  <?php print $styles ?>
+  <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php print $base_path . $directory ?>/style-fix-ie6.css"><![endif]-->
+  <?php print $scripts ?>
+</head>
+<body class="<?php print $body_classes; ?>">
+	<div id="main_bacground">
+<!--wraper_start-->
+   	  <div id="wraper">
+<!--header_start-->
+       	<div id="header">
+       		<div class="logo"><img src="<?php print $base_path . $directory ?>/images/logo.jpg" alt="logo" width="243" height="159" /></div>
+                <div class="images"><img src="<?php print $base_path . $directory ?>/images/header_img.jpg" alt="img" /></div>
+                
+                <div class="clr"></div>
+        </div>
+            <div class="clr"></div>
+<!--header_end-->
+<!--nav_start-->
+	  	   <div id="nav">
+          <?php if (isset($primary_links)) : ?>
+            <?php print theme('links', $primary_links, array('class' => 'primary-links')) ?>
+          <?php endif; ?>
+          <div class="clr"></div>
+        </div><!--nav_end-->
+        <div class="clr"></div>
+<!--content-->
+             <div id="mid_content">
+             
+             <?php if ($content_top): print '<div id="blog_bannger">'. $content_top .'</div>'; endif; ?>
+              
+              <?php if ($mission): print '<div id="mission">'. $mission .'</div>'; endif; ?>
+              <?php if ($tabs): print '<div id="tabs-wrapper" class="clear-block">'; endif; ?>
+              <?php if ($tabs): print '<ul class="tabs primary">'. $tabs .'</ul></div>'; endif; ?>
+              <?php if ($tabs2): print '<ul class="tabs secondary">'. $tabs2 .'</ul>'; endif; ?>
+              <?php if ($show_messages && $messages): print $messages; endif; ?>
+              <?php print $help; ?>
+             
+
+              <?php if($is_front) {
+              ?><div id="page"><?
+              } else {
+              ?><div id="page_blog">
+                <div id="blog_topnav">
+                <?php print $breadcrumb; ?>
+                <div class="clr"></div>
+                <div id="section-headline"><?php if ($title_section): print ''. $title_section .''; endif; ?></div>                
+                <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+              <? } ?>
+            	 
+<!--content_left-->
+              <?php if($right) {
+              ?><div id="mid_contentleft"><?
+              } else {
+              ?><div id="mid_contentleft2"><?
+              } ?>
+              
+
+                    
+                  <div id="left">
+                  <?php if ($left): ?>
+                      <?php print $left ?>
+                  <?php endif; ?>
+                  </div>
+
+
+           				<div id="main_forumrigmt">
+                    <div id="forum_right">
+                    
+                   		<div class="forum_righttop">
+                        <div class="forum_topnav">
+                          <ul>
+                            <li><a href="<?php print url('forum') ?>">Board Index</a>&nbsp; |</li>
+                            <li><a href="<?php print url('forum/unanswered') ?>">View Unanswered posts</a>&nbsp; |</li>
+                            <li><a href="<?php print url('forum/active') ?>">View Active Topics</a>&nbsp; | </li>
+                            <li><a href="<?php print url('forum/today') ?>">Today’s Posts</a></li>
+                          </ul>
+                        <div class="clr"></div>
+                        </div>
+                        <h4 class="forum_text">It is currently <?php print date("F j, Y, g:i a"); ?></h4>
+                        <div class="clr"></div>
+                        <div class="spacer"></div>
+                        <div class="clr"></div>
+<!--
+                             <h1 class="forum_text2">Forum</h1>
+                            <div class="main_post">
+                           	  <div class="post_box1">Topics</div>
+                                <div class="topix_box">Topics</div>
+                                <div class="post_box">Last Post</div>
+                          </div>
+
+                         <div class="clr">
+                        </div>
+-->
+                   </div><!-- /forum_righttop -->
+
+                      <?php print $content ?>       
+                      
+                    </div>
+
+          				</div>
+                </div>
+<!--content_leftend-->
+                
+
+            	  <?php
+                 if ($right): ?>
+                	<div id="mid_contentright">
+                	<?php print $right ?>
+                </div>
+                <?php endif; ?>
+
+                
+               	 <div class="clr"></div>
+                 </div>
+                
+                <?php if ($banner_bottom): ?>
+                	<div id="banner2"><?php print $banner_bottom ?></div>                
+                <?php endif; ?>
+                <div class="spacer2"></div>
+                <div class="clr"></div>
+             </div><!-- /content_end -->
+        <div class="clr"></div>
+           
+      </div><!-- /wraper_end -->
+		<div id="bg_bottom"><img src="<?php print $base_path . $directory ?>/images/bg_bootm.jpg" alt="bg" /></div>
+    </div>
+    
+ <!--footer-->
+ 	<div id="footer">
+ 	  <?php print $footer ?>
+ 	  <p><?php print $footer_message ?></p>
+    <div class="clr"></div>
+  </div>
+  <!--footer_end-->
+  <?php print $closure ?>
+</body>
+</html>

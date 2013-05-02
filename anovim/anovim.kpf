@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="d4b2b825-024f-465f-b20b-f0bc5448f019" kpf_version="4" name="anovim.kpf">
+<preference-set idref="d4b2b825-024f-465f-b20b-f0bc5448f019">
+  <boolean id="import_live">1</boolean>
+</preference-set>
+</project>
